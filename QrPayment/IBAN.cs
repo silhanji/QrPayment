@@ -39,5 +39,15 @@ namespace QrPayment
         {
             return HashCode.Combine(CountryCode, CheckDigits, NationalPart);
         }
+        
+        public static bool operator ==(IBAN iban1, IBAN iban2)
+        {
+            return iban1.Equals(iban2);
+        }
+
+        public static bool operator !=(IBAN iban1, IBAN iban2)
+        {
+            return ! iban1.Equals(iban2);
+        }
     }
 }
