@@ -3,10 +3,10 @@ using QRCoder;
 
 namespace QrPayment.Extensions
 {
-    public static class QrPaymentExtensions
+    public static class PaymentExtensions
     {
         public static byte[] AsPng(
-            this Model.QrPayment payment, 
+            this Model.Payment payment, 
             int pixelsPerModule = 16,
             Color? foregroundColor = null, 
             Color? backgroundColor = null)

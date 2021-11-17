@@ -3,7 +3,7 @@ using System.Text;
 
 namespace QrPayment.Model
 {
-    public class QrPayment
+    public class Payment
     {
         public IBAN Account { get; }
         
@@ -15,7 +15,7 @@ namespace QrPayment.Model
         
         public string? Message { get; }
 
-        public QrPayment(
+        public Payment(
             IBAN account, 
             MoneyAmount? amount = null, 
             string? variableSymbol = null, 
@@ -32,8 +32,9 @@ namespace QrPayment.Model
             {
                 if(variableSymbol.Length > 10)
                     throw new ArgumentException("variableSymbol can have at most 10 characters");
-                if (variableSymbol.Contains('*'))
-                    throw new ArgumentException("variableSymbol can not contain asterisk [*]");
+                foreach(var c in variableSymbol)
+                    if(! char.IsDigit(c))
+                        throw new ArgumentException("variableSymbol can contain only digits");
             }
             VariableSymbol = variableSymbol;
 
@@ -41,8 +42,9 @@ namespace QrPayment.Model
             {
                 if(constantSymbol.Length > 10)
                     throw new ArgumentException("constantSymbol can have at most 10 characters");
-                if (constantSymbol.Contains('*'))
-                    throw new ArgumentException("constantSymbol can not contain asterisk [*]");
+                foreach(var c in constantSymbol)
+                    if(! char.IsDigit(c))
+                        throw new ArgumentException("constantSymbol can contain only digits");
             } 
             ConstantSymbol = constantSymbol;
 
@@ -71,17 +73,17 @@ namespace QrPayment.Model
             if (Amount is not null)
             {
                 paymentStringBuilder.Append($"*AM:{Amount.Amount}");
-                paymentStringBuilder.Append($"*CC:{Amount.Currency.ToString()}");
+                paymentStringBuilder.Append($"*CC:{Amount.Currency.ToString().ToUpper()}");
             }
 
             if (VariableSymbol is not null)
             {
-                paymentStringBuilder.Append($"X-VS:{VariableSymbol}");
+                paymentStringBuilder.Append($"*X-VS:{VariableSymbol}");
             }
 
             if (ConstantSymbol is not null)
             {
-                paymentStringBuilder.Append($"X-KS:{ConstantSymbol}");
+                paymentStringBuilder.Append($"*X-KS:{ConstantSymbol}");
             }
 
             if (Message is not null)
