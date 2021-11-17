@@ -6,48 +6,35 @@ using QrPayment;
 namespace QrPaymentTests
 {
     [TestFixture]
-    public class IBANFactoryTests
+    public class CzechIBANFactoryTests
     {
         public static IEnumerable<string> ValidIBANs = new[]
         {
             "CZ6508000000192000145399",
             "CZ6907101781240000004159",
-            "GB82WEST12345698765432"
-            
         };
         public static IEnumerable<string> InvalidIBANs = new[]
         {
             "",
             "CZ3",
-            "CZ6508000000192000145394"
+            "CZ6508000000192000145394",
+            "GB82WEST12345698765432",
         };
 
-        [TestCaseSource(typeof(IBANFactoryTests), nameof(ValidIBANs))]
+        [TestCaseSource(typeof(CzechIBANFactoryTests), nameof(ValidIBANs))]
         public void ValidIBANTest(string representation)
         {
-            var factory = new IBANFactory();
+            var factory = new CzechIBANFactory();
             var iban = factory.CreateIBAN(representation);
             
             Assert.That(iban.Representation, Is.EqualTo(representation));
         }
 
-        [TestCaseSource(typeof(IBANFactoryTests), nameof(InvalidIBANs))]
+        [TestCaseSource(typeof(CzechIBANFactoryTests), nameof(InvalidIBANs))]
         public void InvalidIBANTest(string representation)
         {
-            var factory = new IBANFactory();
+            var factory = new CzechIBANFactory();
             Assert.Throws<ArgumentException>(() => factory.CreateIBAN(representation));
-        }
-
-        [Test]
-        public void CalculateCheckSum_Test()
-        {
-            string countryCode = "CZ";
-            string expectedChecksum = "69";
-            string nationalPart = "07101781240000004159";
-
-            var factory = new IBANFactory();
-            string checksum = factory.CalculateChecksum(countryCode, nationalPart);
-            Assert.That(checksum, Is.EqualTo(expectedChecksum));
         }
     }
 }

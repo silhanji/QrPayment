@@ -21,12 +21,25 @@ namespace QrPayment
             return new IBAN(countryCode, checkDigits, nationalPart);
         }
 
-        protected bool IsValid(string countryCode, string checkDigits, string nationalPart)
+        public string CalculateChecksum(string countryCode, string nationalPart)
+        {
+            int remainder = ChecksumAlgorithm(countryCode, "00", nationalPart);
+            int checksum = 98 - remainder;
+            return $"{checksum}";
+        }
+        
+        protected virtual bool IsValid(string countryCode, string checkDigits, string nationalPart)
         {
             return IsIBANChecksumValid(countryCode, checkDigits, nationalPart);
         }
 
         private bool IsIBANChecksumValid(string countryCode, string checksum, string nationalPart)
+        {
+            int remainder = ChecksumAlgorithm(countryCode, checksum, nationalPart);
+            return remainder == 1;
+        }
+
+        private int ChecksumAlgorithm(string countryCode, string checksum, string nationalPart)
         {
             string reordered = $"{nationalPart}{countryCode}{checksum}";
             var interpolatedBuilder = new StringBuilder();
@@ -44,7 +57,7 @@ namespace QrPayment
                 else
                 {
                     // IBAN contains invalid characters
-                    return false;
+                    throw new ArgumentException($"IBAN contains invalid character: [{c}]");
                 }
             }
 
@@ -54,7 +67,7 @@ namespace QrPayment
             var ninetySeven = new BigInteger(97);
             var remainder = BigInteger.Remainder(bigNumber, ninetySeven);
 
-            return remainder.IsOne;
+            return (int)remainder;
         }
     }
 }
