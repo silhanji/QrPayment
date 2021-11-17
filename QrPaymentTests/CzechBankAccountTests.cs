@@ -1,6 +1,7 @@
 using System;
 using NUnit.Framework;
 using QrPayment;
+using QrPayment.Model;
 
 namespace QrPaymentTests
 {

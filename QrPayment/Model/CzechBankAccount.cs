@@ -1,6 +1,6 @@
 using System;
 
-namespace QrPayment
+namespace QrPayment.Model
 {
     public class CzechBankAccount
     {

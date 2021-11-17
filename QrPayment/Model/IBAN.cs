@@ -1,6 +1,6 @@
 using System;
 
-namespace QrPayment
+namespace QrPayment.Model
 {
     public sealed class IBAN : IEquatable<IBAN>
     {
