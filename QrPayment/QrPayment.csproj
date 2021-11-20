@@ -8,6 +8,7 @@
         <Version>1.0.0</Version>
         <Authors>Jindrich Silhan</Authors>
         <Company>Jindrich Silhan</Company>
+        <RepositoryUrl>https://github.com/silhanji/QrPayment</RepositoryUrl>
         
         <PackageTags>CzechQrPayment</PackageTags>
         <Description>
