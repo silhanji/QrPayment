@@ -59,6 +59,9 @@ namespace QrPayment.Model
             string nationalPart = $"{bankAccount.BankNumber}{paddedPrefix}{paddedAccountNumber}";
 
             var checksum = ibanFactory.CalculateChecksum(countryCode, nationalPart);
+            if (checksum.Length < 2)
+                checksum = $"0{checksum}";
+            
             return ibanFactory.CreateIBAN($"{countryCode}{checksum}{nationalPart}");
         }
 
