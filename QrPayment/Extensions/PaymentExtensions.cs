@@ -9,7 +9,8 @@ namespace QrPayment.Extensions
             this Model.Payment payment, 
             int pixelsPerModule = 16,
             Color? foregroundColor = null, 
-            Color? backgroundColor = null)
+            Color? backgroundColor = null,
+            bool includeBorder = true)
         {
             foregroundColor ??= Color.Black;
             backgroundColor ??= Color.White;
@@ -32,7 +33,8 @@ namespace QrPayment.Extensions
             var generator = new QRCodeGenerator();
             var data = generator.CreateQrCode(payment.CreatePaymentString(), QRCodeGenerator.ECCLevel.Q);
             var qrCode = new PngByteQRCode(data);
-            return qrCode.GetGraphic(pixelsPerModule, foregroundColorBytes, backgroundColorBytes);
+            return qrCode.GetGraphic(
+                pixelsPerModule, foregroundColorBytes, backgroundColorBytes, includeBorder);
         }
     }
 }

@@ -5,9 +5,9 @@
         <Nullable>enable</Nullable>
         
         <PackageId>QrPayment</PackageId>
-        <Version>1.0.0</Version>
-        <Authors>Jindrich Silhan</Authors>
-        <Company>Jindrich Silhan</Company>
+        <Version>1.1.0</Version>
+        <Authors>Jindřich Šilhan</Authors>
+        <Company>Jindřich Šilhan</Company>
         <RepositoryUrl>https://github.com/silhanji/QrPayment</RepositoryUrl>
         
         <PackageTags>CzechQrPayment</PackageTags>
@@ -19,7 +19,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="QRCoder" Version="1.4.1" />
+      <PackageReference Include="QRCoder" Version="1.4.3" />
     </ItemGroup>
 
 </Project>
